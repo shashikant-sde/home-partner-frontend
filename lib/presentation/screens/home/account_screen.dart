@@ -4,6 +4,7 @@ import '../../../core/constants/app_dimensions.dart';
 import 'earnings_screen.dart';
 import 'schedule_screen.dart';
 import 'help_support_screen.dart';
+import 'notification_settings_screen.dart';
 import '../auth/splash_language_screen.dart';
 import '../../../core/utils/translation_manager.dart';
 
@@ -529,6 +530,13 @@ class _AccountScreenState extends State<AccountScreen> {
                       _buildMenuRow(
                         title: 'Notifications',
                         icon: Icons.notifications_none_rounded,
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const NotificationSettingsScreen(),
+                            ),
+                          );
+                        },
                       ),
                       _buildMenuRow(
                         title: 'Language',
