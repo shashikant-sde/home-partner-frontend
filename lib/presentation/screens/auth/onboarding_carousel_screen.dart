@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
 import 'phone_login_screen.dart';
+import '../../../core/utils/translation_manager.dart';
 
 
 class OnboardingSlide {
@@ -31,23 +32,23 @@ class _OnboardingCarouselScreenState extends State<OnboardingCarouselScreen> {
   int _currentIndex = 0;
   Timer? _autoRotateTimer;
 
-  final List<OnboardingSlide> _slides = const [
+  List<OnboardingSlide> get _slides => [
     OnboardingSlide(
-      titlePrefix: 'Work & Earn — \n',
-      highlightedTitle: 'Up to ₹30,000/month',
-      description: 'Join over 5,000+ professionals providing top-rated home services in your city.',
+      titlePrefix: AppTranslation.translate('s1_prefix'),
+      highlightedTitle: AppTranslation.translate('s1_highlight'),
+      description: AppTranslation.translate('s1_desc'),
       imageUrl: 'assets/images/barber_1.jpg',
     ),
     OnboardingSlide(
-      titlePrefix: 'Flexible Hours — \n',
-      highlightedTitle: 'Be Your Own Boss',
-      description: 'Choose your own schedule, accept jobs near you, and grow your daily income.',
+      titlePrefix: AppTranslation.translate('s2_prefix'),
+      highlightedTitle: AppTranslation.translate('s2_highlight'),
+      description: AppTranslation.translate('s2_desc'),
       imageUrl: 'assets/images/barber_2.jpg',
     ),
     OnboardingSlide(
-      titlePrefix: 'Instant Payouts — \n',
-      highlightedTitle: 'Direct to Bank Account',
-      description: 'Get guaranteed hassle-free weekly payouts and performance bonus rewards.',
+      titlePrefix: AppTranslation.translate('s3_prefix'),
+      highlightedTitle: AppTranslation.translate('s3_highlight'),
+      description: AppTranslation.translate('s3_desc'),
       imageUrl: 'assets/images/barber_3.jpg',
     ),
   ];
@@ -267,20 +268,20 @@ class _OnboardingCarouselScreenState extends State<OnboardingCarouselScreen> {
                               borderRadius: BorderRadius.circular(AppDimensions.radiusFull),
                             ),
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Start Working',
-                                style: TextStyle(
+                                AppTranslation.translate('start_working'),
+                                style: const TextStyle(
                                   fontFamily: 'Manrope',
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
                               ),
-                              SizedBox(width: 8),
-                              Icon(
+                              const SizedBox(width: 8),
+                              const Icon(
                                 Icons.arrow_forward_rounded,
                                 color: Colors.white,
                                 size: 22,
@@ -322,22 +323,22 @@ class _OnboardingCarouselScreenState extends State<OnboardingCarouselScreen> {
                           const SizedBox(width: 14),
 
                           // Text Info
-                          const Expanded(
+                          Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Looking for help?',
-                                  style: TextStyle(
+                                  AppTranslation.translate('looking_for_help'),
+                                  style: const TextStyle(
                                     fontFamily: 'Inter',
                                     fontSize: 13,
                                     color: Colors.white70,
                                   ),
                                 ),
-                                SizedBox(height: 2),
+                                const SizedBox(height: 2),
                                 Text(
-                                  'Book a Service →',
-                                  style: TextStyle(
+                                  AppTranslation.translate('book_service'),
+                                  style: const TextStyle(
                                     fontFamily: 'Inter',
                                     fontSize: 15,
                                     fontWeight: FontWeight.w600,
@@ -347,7 +348,6 @@ class _OnboardingCarouselScreenState extends State<OnboardingCarouselScreen> {
                               ],
                             ),
                           ),
-
                           // Arrow Icon
                           const Icon(
                             Icons.chevron_right_rounded,

@@ -4,6 +4,8 @@ import '../../../core/constants/app_dimensions.dart';
 import 'earnings_screen.dart';
 import 'schedule_screen.dart';
 import 'help_support_screen.dart';
+import '../auth/splash_language_screen.dart';
+import '../../../core/utils/translation_manager.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -531,14 +533,21 @@ class _AccountScreenState extends State<AccountScreen> {
                       _buildMenuRow(
                         title: 'Language',
                         icon: Icons.language_rounded,
-                        trailingWidget: const Text(
-                          'English (US)',
-                          style: TextStyle(
+                        trailingWidget: Text(
+                          AppTranslation.languageNames[AppTranslation.currentLanguage] ?? 'English',
+                          style: const TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 14,
                             color: AppColors.onSurfaceVariant,
                           ),
                         ),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const SplashLanguageScreen(),
+                            ),
+                          );
+                        },
                       ),
                       _buildMenuRow(
                         title: 'Help & Support',
