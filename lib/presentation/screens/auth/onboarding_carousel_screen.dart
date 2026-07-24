@@ -36,19 +36,19 @@ class _OnboardingCarouselScreenState extends State<OnboardingCarouselScreen> {
       titlePrefix: 'Work & Earn — \n',
       highlightedTitle: 'Up to ₹30,000/month',
       description: 'Join over 5,000+ professionals providing top-rated home services in your city.',
-      imageUrl: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=1000&auto=format&fit=crop',
+      imageUrl: 'assets/images/barber_1.jpg',
     ),
     OnboardingSlide(
       titlePrefix: 'Flexible Hours — \n',
       highlightedTitle: 'Be Your Own Boss',
       description: 'Choose your own schedule, accept jobs near you, and grow your daily income.',
-      imageUrl: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1000&auto=format&fit=crop',
+      imageUrl: 'assets/images/barber_2.jpg',
     ),
     OnboardingSlide(
       titlePrefix: 'Instant Payouts — \n',
       highlightedTitle: 'Direct to Bank Account',
       description: 'Get guaranteed hassle-free weekly payouts and performance bonus rewards.',
-      imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000&auto=format&fit=crop',
+      imageUrl: 'assets/images/barber_3.jpg',
     ),
   ];
 
@@ -99,13 +99,18 @@ class _OnboardingCarouselScreenState extends State<OnboardingCarouselScreen> {
               return Stack(
                 fit: StackFit.expand,
                 children: [
-                  Image.network(
-                    slide.imageUrl,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(color: const Color(0xFF1E162B));
-                    },
-                  ),
+                  slide.imageUrl.startsWith('assets/')
+                      ? Image.asset(
+                          slide.imageUrl,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.network(
+                          slide.imageUrl,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(color: const Color(0xFF1E162B));
+                          },
+                        ),
                   // Dark-to-transparent gradient overlay
                   Container(
                     decoration: const BoxDecoration(
