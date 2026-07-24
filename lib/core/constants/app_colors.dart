@@ -67,5 +67,6 @@ class AppColors {
   static const secondaryFixed = Color(0xFFE8DDFF);
   static const onSecondaryFixedVariant = Color(0xFF5110C6);
   static const tertiaryFixed = Color(0xFFFFDBCD);
+  static const onTertiaryFixedVariant = Color(0xFF7D2D00);
   static const surfaceVariant = Color(0xFFE1E2E5);
 }

@@ -5,6 +5,8 @@ import 'earnings_screen.dart';
 import 'schedule_screen.dart';
 import 'help_support_screen.dart';
 import 'notification_settings_screen.dart';
+import 'bank_details_screen.dart';
+import 'select_experience_screen.dart';
 import '../auth/splash_language_screen.dart';
 import '../../../core/utils/translation_manager.dart';
 
@@ -96,11 +98,12 @@ class _AccountScreenState extends State<AccountScreen> {
     IconData? trailingIcon,
     Widget? customTrailing,
     bool showDivider = true,
+    VoidCallback? onTap,
   }) {
     return Column(
       children: [
         InkWell(
-          onTap: () {},
+          onTap: onTap ?? () {},
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppDimensions.md, vertical: 16),
             child: Row(
@@ -369,6 +372,13 @@ class _AccountScreenState extends State<AccountScreen> {
                         value: '5+ Years',
                         trailingIcon: Icons.chevron_right_rounded,
                         showDivider: false,
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const SelectExperienceScreen(),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -504,6 +514,13 @@ class _AccountScreenState extends State<AccountScreen> {
                         title: 'Bank Details',
                         icon: Icons.account_balance_outlined,
                         showDivider: false,
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const BankDetailsScreen(),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
