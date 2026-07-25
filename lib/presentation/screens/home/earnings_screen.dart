@@ -732,7 +732,7 @@ class _EarningsScreenState extends State<EarningsScreen> {
                 icon: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _activeNavIndex == 2 ? AppColors.primaryContainer.withOpacity(0.1) : Colors.transparent,
+                    color: Colors.transparent,
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: Icon(
