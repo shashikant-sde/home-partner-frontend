@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
 import 'select_service_screen.dart';
-
+import '../home/help_support_screen.dart';
 
 class SelectCityScreen extends StatefulWidget {
   const SelectCityScreen({super.key});
@@ -130,7 +130,11 @@ class _SelectCityScreenState extends State<SelectCityScreen> {
             child: Center(
               child: InkWell(
                 onTap: () {
-                  // Help action
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const HelpSupportScreen(),
+                    ),
+                  );
                 },
                 borderRadius: BorderRadius.circular(AppDimensions.radiusFull),
                 child: Padding(

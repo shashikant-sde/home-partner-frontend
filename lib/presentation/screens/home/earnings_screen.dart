@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
-
+import 'help_support_screen.dart';
 class Transaction {
   final String id;
   final String title;
@@ -208,7 +208,13 @@ class _EarningsScreenState extends State<EarningsScreen> {
             height: 32,
             margin: const EdgeInsets.only(right: AppDimensions.marginMobile),
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const HelpSupportScreen(),
+                  ),
+                );
+              },
               style: OutlinedButton.styleFrom(
                 side: BorderSide(color: AppColors.primary.withOpacity(0.2)),
                 padding: const EdgeInsets.symmetric(horizontal: 16),

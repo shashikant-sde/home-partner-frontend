@@ -3,7 +3,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
 import 'select_city_screen.dart';
 import 'set_location_screen.dart';
-
+import '../home/help_support_screen.dart';
 
 class WorkPreferenceOption {
   final String id;
@@ -310,7 +310,11 @@ class _WorkPreferenceScreenState extends State<WorkPreferenceScreen>
                   const Spacer(),
                   TextButton(
                     onPressed: () {
-                      // Help dialog
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const HelpSupportScreen(),
+                        ),
+                      );
                     },
                     child: const Text(
                       'Help',
