@@ -65,8 +65,12 @@ class _ServiceProviderDetailsScreenState
     extends State<ServiceProviderDetailsScreen> {
   final _nameController = TextEditingController();
   final _bioController = TextEditingController();
+  final _salonNameController = TextEditingController();
   String _selectedExperience = '1 Year';
   double _serviceRadius = 5.0;
+
+  // Work mode: 'online' = home-visit, 'offline' = at salon
+  String _workMode = 'online';
 
   // Profile photo
   File? _profileImage;
@@ -133,6 +137,7 @@ class _ServiceProviderDetailsScreenState
   void dispose() {
     _nameController.dispose();
     _bioController.dispose();
+    _salonNameController.dispose();
     super.dispose();
   }
 
@@ -395,6 +400,11 @@ class _ServiceProviderDetailsScreenState
       return;
     }
 
+    if (_workMode == 'offline' && _salonNameController.text.trim().isEmpty) {
+      _showError('Please enter your Salon / Shop name.');
+      return;
+    }
+
     final missingRequired = _docSlots
         .where((s) => s.required && s.uploaded == null)
         .map((s) => s.label)
@@ -640,6 +650,261 @@ class _ServiceProviderDetailsScreenState
                               counterText: '',
                             ),
                           ),
+                        ),
+                        const SizedBox(height: 24),
+
+                        // ── Work Mode ──────────────────────────────────────
+                        const Divider(color: AppColors.surfaceVariant),
+                        const SizedBox(height: 16),
+                        _label('Work Mode'),
+                        const SizedBox(height: 4),
+                        Text(
+                          'How do you prefer to serve clients?',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 12,
+                            color: AppColors.onSurfaceVariant,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+
+                        // Toggle row — Online / Offline
+                        Row(
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () => setState(() {
+                                  _workMode = 'online';
+                                }),
+                                child: AnimatedContainer(
+                                  duration: const Duration(milliseconds: 220),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 14, horizontal: 8),
+                                  decoration: BoxDecoration(
+                                    gradient: _workMode == 'online'
+                                        ? AppColors.primaryGradient
+                                        : null,
+                                    color: _workMode == 'online'
+                                        ? null
+                                        : AppColors.surfaceContainerLow,
+                                    borderRadius: BorderRadius.circular(14),
+                                    border: Border.all(
+                                      color: _workMode == 'online'
+                                          ? Colors.transparent
+                                          : AppColors.outlineVariant,
+                                    ),
+                                    boxShadow: _workMode == 'online'
+                                        ? [
+                                            BoxShadow(
+                                              color: AppColors.primary
+                                                  .withOpacity(0.25),
+                                              blurRadius: 10,
+                                              offset: const Offset(0, 3),
+                                            ),
+                                          ]
+                                        : [],
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Icon(
+                                        Icons.home_rounded,
+                                        size: 22,
+                                        color: _workMode == 'online'
+                                            ? Colors.white
+                                            : AppColors.onSurfaceVariant,
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Text(
+                                        'Online',
+                                        style: TextStyle(
+                                          fontFamily: 'Manrope',
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.bold,
+                                          color: _workMode == 'online'
+                                              ? Colors.white
+                                              : AppColors.onSurfaceVariant,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 2),
+                                      Text(
+                                        'Home Visit',
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontSize: 10,
+                                          color: _workMode == 'online'
+                                              ? Colors.white70
+                                              : AppColors.outline,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () => setState(() {
+                                  _workMode = 'offline';
+                                }),
+                                child: AnimatedContainer(
+                                  duration: const Duration(milliseconds: 220),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 14, horizontal: 8),
+                                  decoration: BoxDecoration(
+                                    gradient: _workMode == 'offline'
+                                        ? AppColors.primaryGradient
+                                        : null,
+                                    color: _workMode == 'offline'
+                                        ? null
+                                        : AppColors.surfaceContainerLow,
+                                    borderRadius: BorderRadius.circular(14),
+                                    border: Border.all(
+                                      color: _workMode == 'offline'
+                                          ? Colors.transparent
+                                          : AppColors.outlineVariant,
+                                    ),
+                                    boxShadow: _workMode == 'offline'
+                                        ? [
+                                            BoxShadow(
+                                              color: AppColors.primary
+                                                  .withOpacity(0.25),
+                                              blurRadius: 10,
+                                              offset: const Offset(0, 3),
+                                            ),
+                                          ]
+                                        : [],
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Icon(
+                                        Icons.store_rounded,
+                                        size: 22,
+                                        color: _workMode == 'offline'
+                                            ? Colors.white
+                                            : AppColors.onSurfaceVariant,
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Text(
+                                        'Offline',
+                                        style: TextStyle(
+                                          fontFamily: 'Manrope',
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.bold,
+                                          color: _workMode == 'offline'
+                                              ? Colors.white
+                                              : AppColors.onSurfaceVariant,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 2),
+                                      Text(
+                                        'At Salon',
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontSize: 10,
+                                          color: _workMode == 'offline'
+                                              ? Colors.white70
+                                              : AppColors.outline,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        // ── Animated Salon Name field ──────────────────────
+                        AnimatedSize(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOutCubic,
+                          child: _workMode == 'offline'
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 20),
+                                    // Info banner
+                                    Container(
+                                      padding: const EdgeInsets.all(12),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFF0EEFF),
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(
+                                          color: AppColors.primary
+                                              .withOpacity(0.25),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.info_outline_rounded,
+                                            color: AppColors.primary,
+                                            size: 18,
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Expanded(
+                                            child: Text(
+                                              'Your salon name will be visible to clients so they can visit you directly.',
+                                              style: TextStyle(
+                                                fontFamily: 'Inter',
+                                                fontSize: 12,
+                                                color: AppColors.primary,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 14),
+                                    _label('Salon / Shop Name *'),
+                                    const SizedBox(height: 8),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: AppColors.surfaceContainerLow,
+                                        borderRadius:
+                                            BorderRadius.circular(12),
+                                        border: Border.all(
+                                          color: AppColors.primary
+                                              .withOpacity(0.4),
+                                          width: 1.5,
+                                        ),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
+                                      child: Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.store_rounded,
+                                            color: AppColors.primary,
+                                            size: 20,
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Expanded(
+                                            child: TextField(
+                                              controller:
+                                                  _salonNameController,
+                                              style: const TextStyle(
+                                                fontFamily: 'Inter',
+                                                fontSize: 16,
+                                                color: AppColors.onSurface,
+                                              ),
+                                              decoration:
+                                                  const InputDecoration(
+                                                hintText:
+                                                    'e.g. Royal Cuts Salon',
+                                                hintStyle: TextStyle(
+                                                    color: AppColors.outline),
+                                                border: InputBorder.none,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : const SizedBox.shrink(),
                         ),
                       ],
                     ),

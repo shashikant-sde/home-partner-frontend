@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
-import 'available_jobs_screen.dart';
 import 'schedule_screen.dart';
 import 'earnings_screen.dart';
 import 'account_screen.dart';

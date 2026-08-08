@@ -289,30 +289,6 @@ class _AccountScreenState extends State<AccountScreen> {
                       color: AppColors.onSurface,
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: AppColors.secondaryFixed,
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.stars_rounded, color: AppColors.secondary, size: 16),
-                        SizedBox(width: 4),
-                        Text(
-                          'Pro Partner',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.secondary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ),
