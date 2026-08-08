@@ -4,6 +4,11 @@ import '../../../core/constants/app_dimensions.dart';
 import 'earnings_screen.dart';
 import 'schedule_screen.dart';
 import 'help_support_screen.dart';
+import 'notification_settings_screen.dart';
+import 'bank_details_screen.dart';
+import 'select_experience_screen.dart';
+import '../auth/splash_language_screen.dart';
+import '../../../core/utils/translation_manager.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -93,11 +98,12 @@ class _AccountScreenState extends State<AccountScreen> {
     IconData? trailingIcon,
     Widget? customTrailing,
     bool showDivider = true,
+    VoidCallback? onTap,
   }) {
     return Column(
       children: [
         InkWell(
-          onTap: () {},
+          onTap: onTap ?? () {},
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppDimensions.md, vertical: 16),
             child: Row(
@@ -283,30 +289,6 @@ class _AccountScreenState extends State<AccountScreen> {
                       color: AppColors.onSurface,
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: AppColors.secondaryFixed,
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.stars_rounded, color: AppColors.secondary, size: 16),
-                        SizedBox(width: 4),
-                        Text(
-                          'Pro Partner',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.secondary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -366,6 +348,13 @@ class _AccountScreenState extends State<AccountScreen> {
                         value: '5+ Years',
                         trailingIcon: Icons.chevron_right_rounded,
                         showDivider: false,
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const SelectExperienceScreen(),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -501,6 +490,13 @@ class _AccountScreenState extends State<AccountScreen> {
                         title: 'Bank Details',
                         icon: Icons.account_balance_outlined,
                         showDivider: false,
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const BankDetailsScreen(),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -527,18 +523,32 @@ class _AccountScreenState extends State<AccountScreen> {
                       _buildMenuRow(
                         title: 'Notifications',
                         icon: Icons.notifications_none_rounded,
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const NotificationSettingsScreen(),
+                            ),
+                          );
+                        },
                       ),
                       _buildMenuRow(
                         title: 'Language',
                         icon: Icons.language_rounded,
-                        trailingWidget: const Text(
-                          'English (US)',
-                          style: TextStyle(
+                        trailingWidget: Text(
+                          AppTranslation.languageNames[AppTranslation.currentLanguage] ?? 'English',
+                          style: const TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 14,
                             color: AppColors.onSurfaceVariant,
                           ),
                         ),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const SplashLanguageScreen(),
+                            ),
+                          );
+                        },
                       ),
                       _buildMenuRow(
                         title: 'Help & Support',
@@ -639,7 +649,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 icon: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _activeNavIndex == 0 ? AppColors.primaryContainer.withOpacity(0.1) : Colors.transparent,
+                    color: Colors.transparent,
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: Icon(Icons.home_outlined, color: _activeNavIndex == 0 ? AppColors.primary : AppColors.onSurfaceVariant),
@@ -650,7 +660,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 icon: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _activeNavIndex == 1 ? AppColors.primaryContainer.withOpacity(0.1) : Colors.transparent,
+                    color: Colors.transparent,
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: Icon(Icons.calendar_today_rounded, color: _activeNavIndex == 1 ? AppColors.primary : AppColors.onSurfaceVariant),
@@ -661,7 +671,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 icon: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _activeNavIndex == 2 ? AppColors.primaryContainer.withOpacity(0.1) : Colors.transparent,
+                    color: Colors.transparent,
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: Icon(Icons.payments_outlined, color: _activeNavIndex == 2 ? AppColors.primary : AppColors.onSurfaceVariant),
@@ -672,7 +682,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 icon: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _activeNavIndex == 3 ? AppColors.primaryContainer.withOpacity(0.1) : Colors.transparent,
+                    color: Colors.transparent,
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: Icon(Icons.person, color: _activeNavIndex == 3 ? AppColors.primary : AppColors.onSurfaceVariant),

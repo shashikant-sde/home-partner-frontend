@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
 import 'otp_verification_screen.dart';
-
+import '../home/help_support_screen.dart';
 
 class PhoneLoginScreen extends StatefulWidget {
   const PhoneLoginScreen({super.key});
@@ -40,7 +40,11 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
             child: Center(
               child: OutlinedButton(
                 onPressed: () {
-                  // Help action logic
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const HelpSupportScreen(),
+                    ),
+                  );
                 },
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: AppColors.primary, width: 1.5),

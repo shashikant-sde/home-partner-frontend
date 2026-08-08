@@ -635,7 +635,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 icon: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _activeNavIndex == 0 ? AppColors.primaryContainer.withOpacity(0.1) : Colors.transparent,
+                    color: Colors.transparent,
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: Icon(Icons.home_outlined, color: _activeNavIndex == 0 ? AppColors.primary : AppColors.onSurfaceVariant),
@@ -646,7 +646,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 icon: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _activeNavIndex == 1 ? AppColors.primaryContainer.withOpacity(0.1) : Colors.transparent,
+                    color: Colors.transparent,
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: Icon(Icons.calendar_today_rounded, color: _activeNavIndex == 1 ? AppColors.primary : AppColors.onSurfaceVariant),
@@ -657,7 +657,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 icon: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _activeNavIndex == 2 ? AppColors.primaryContainer.withOpacity(0.1) : Colors.transparent,
+                    color: Colors.transparent,
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: Icon(Icons.payments_outlined, color: _activeNavIndex == 2 ? AppColors.primary : AppColors.onSurfaceVariant),
@@ -668,7 +668,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 icon: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _activeNavIndex == 3 ? AppColors.primaryContainer.withOpacity(0.1) : Colors.transparent,
+                    color: Colors.transparent,
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: Icon(Icons.person_outline_rounded, color: _activeNavIndex == 3 ? AppColors.primary : AppColors.onSurfaceVariant),

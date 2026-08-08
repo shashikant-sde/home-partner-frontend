@@ -27,7 +27,7 @@ class SelectServiceScreen extends StatefulWidget {
 }
 
 class _SelectServiceScreenState extends State<SelectServiceScreen> {
-  // Store selected service IDs (Multi-select enabled per the mockup checkboxes/radios)
+  // Store selected service IDs (Single-select enabled, default is barber)
   final Set<String> _selectedServiceIds = {'barber'};
 
   final List<ServiceOption> _services = const [
@@ -40,11 +40,13 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
       id: 'plumber',
       title: 'Plumber',
       imageUrl: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=200&auto=format&fit=crop',
+      isAvailable: false, // Coming Soon / Disabled
     ),
     ServiceOption(
       id: 'electrician',
       title: 'Electrician',
       imageUrl: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=200&auto=format&fit=crop',
+      isAvailable: false, // Coming Soon / Disabled
     ),
     ServiceOption(
       id: 'carpenter',
@@ -56,11 +58,8 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
 
   void _toggleSelection(String serviceId) {
     setState(() {
-      if (_selectedServiceIds.contains(serviceId)) {
-        _selectedServiceIds.remove(serviceId);
-      } else {
-        _selectedServiceIds.add(serviceId);
-      }
+      _selectedServiceIds.clear();
+      _selectedServiceIds.add(serviceId);
     });
   }
 
@@ -138,8 +137,8 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
                         ),
                   ),
                   const SizedBox(height: 4),
-                  Text(
-                    'Choose all the professional services you can provide.',
+                   Text(
+                    'Choose the professional service you provide.',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: AppColors.onSurfaceVariant,
                         ),
@@ -158,7 +157,7 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
                           onTap: isAvailable ? () => _toggleSelection(service.id) : null,
                           borderRadius: BorderRadius.circular(20),
                           child: Opacity(
-                            opacity: isAvailable ? 1.0 : 0.5,
+                            opacity: isAvailable ? 1.0 : 0.6,
                             child: Container(
                               padding: const EdgeInsets.all(16),
                               decoration: BoxDecoration(
@@ -227,27 +226,27 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
                                             ],
                                           ),
                                         ],
-                                        if (!isAvailable) ...[
-                                          const SizedBox(height: 4),
-                                          const Text(
-                                            'Coming Soon',
-                                            style: TextStyle(
-                                              fontFamily: 'Inter',
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600,
-                                              color: AppColors.outline,
-                                            ),
-                                          ),
-                                        ],
                                       ],
                                     ),
                                   ),
 
-                                  // Right Radio/Check Indicator
+                                  // Right Radio/Check Indicator or Coming Soon
                                   if (!isAvailable)
-                                    const Icon(
-                                      Icons.block_flipped,
-                                      color: AppColors.outline,
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.surfaceContainerHigh,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: const Text(
+                                        'Coming Soon',
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.onSurfaceVariant,
+                                        ),
+                                      ),
                                     )
                                   else
                                     Container(

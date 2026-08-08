@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
 import 'service_provider_details_screen.dart';
-
+import '../home/help_support_screen.dart';
 class SetLocationScreen extends StatefulWidget {
   const SetLocationScreen({super.key});
 
@@ -139,7 +139,13 @@ class _SetLocationScreenState extends State<SetLocationScreen> with SingleTicker
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const HelpSupportScreen(),
+                        ),
+                      );
+                    },
                     child: const Text(
                       'Help',
                       style: TextStyle(

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
 import 'complete_profile_screen.dart';
-
+import '../home/help_support_screen.dart';
 class OtpVerificationScreen extends StatefulWidget {
   final String phoneNumber;
 
@@ -89,7 +89,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             child: Center(
               child: InkWell(
                 onTap: () {
-                  // Help action
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const HelpSupportScreen(),
+                    ),
+                  );
                 },
                 borderRadius: BorderRadius.circular(AppDimensions.radiusFull),
                 child: Padding(

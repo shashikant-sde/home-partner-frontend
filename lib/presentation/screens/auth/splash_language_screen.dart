@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
 import 'onboarding_carousel_screen.dart';
+import '../../../core/utils/translation_manager.dart';
 
 class LanguageOption {
   final String code;
@@ -34,6 +35,10 @@ class _SplashLanguageScreenState extends State<SplashLanguageScreen>
     LanguageOption(code: 'EN', label: 'English', nativeText: 'EN'),
     LanguageOption(code: 'HI', label: 'Hindi', nativeText: 'हि'),
     LanguageOption(code: 'MR', label: 'Marathi', nativeText: 'म'),
+    LanguageOption(code: 'KN', label: 'Kannada', nativeText: 'ಕ'),
+    LanguageOption(code: 'TA', label: 'Tamil', nativeText: 'த'),
+    LanguageOption(code: 'TE', label: 'Telugu', nativeText: 'తె'),
+    LanguageOption(code: 'BN', label: 'Bengali', nativeText: 'বা'),
   ];
 
   @override
@@ -221,103 +226,111 @@ class _SplashLanguageScreenState extends State<SplashLanguageScreen>
                       ),
                       const SizedBox(height: 24),
 
-                      // Language Cards List
-                      Column(
-                        children: _languages.map((lang) {
-                          final isSelected = _selectedLanguageCode == lang.code;
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 12),
-                            child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  _selectedLanguageCode = lang.code;
-                                });
-                              },
-                              borderRadius: BorderRadius.circular(AppDimensions.radiusXl),
-                              child: Container(
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  color: AppColors.surfaceContainerLowest,
+                      // Language Cards List (Scrollable)
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxHeight: MediaQuery.of(context).size.height * 0.4,
+                        ),
+                        child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          child: Column(
+                            children: _languages.map((lang) {
+                              final isSelected = _selectedLanguageCode == lang.code;
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 12),
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      _selectedLanguageCode = lang.code;
+                                    });
+                                  },
                                   borderRadius: BorderRadius.circular(AppDimensions.radiusXl),
-                                  border: Border.all(
-                                    color: isSelected
-                                        ? AppColors.primary
-                                        : Colors.transparent,
-                                    width: 2,
-                                  ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Color.fromRGBO(25, 28, 30, 0.04),
-                                      blurRadius: 20,
-                                      offset: Offset(0, 4),
-                                    ),
-                                  ],
-                                ),
-                                child: Row(
-                                  children: [
-                                    // Language Icon / Badge
-                                    Container(
-                                      width: 40,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(16),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.surfaceContainerLowest,
+                                      borderRadius: BorderRadius.circular(AppDimensions.radiusXl),
+                                      border: Border.all(
                                         color: isSelected
-                                            ? AppColors.primaryContainer.withOpacity(0.15)
-                                            : AppColors.surfaceContainerHigh,
+                                            ? AppColors.primary
+                                            : Colors.transparent,
+                                        width: 2,
                                       ),
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        lang.nativeText,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: isSelected
-                                              ? AppColors.primary
-                                              : AppColors.onSurfaceVariant,
-                                          fontSize: 16,
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: Color.fromRGBO(25, 28, 30, 0.04),
+                                          blurRadius: 20,
+                                          offset: Offset(0, 4),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                    const SizedBox(width: 16),
-
-                                    // Language Label
-                                    Text(
-                                      lang.label,
-                                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                            fontWeight: FontWeight.w600,
-                                            color: AppColors.onSurface,
+                                    child: Row(
+                                      children: [
+                                        // Language Icon / Badge
+                                        Container(
+                                          width: 40,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: isSelected
+                                                ? AppColors.primaryContainer.withOpacity(0.15)
+                                                : AppColors.surfaceContainerHigh,
                                           ),
-                                    ),
-                                    const Spacer(),
-
-                                    // Radio Selection Indicator
-                                    Container(
-                                      width: 24,
-                                      height: 24,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: isSelected
-                                              ? AppColors.primary
-                                              : AppColors.outlineVariant,
-                                          width: 2,
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            lang.nativeText,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: isSelected
+                                                  ? AppColors.primary
+                                                  : AppColors.onSurfaceVariant,
+                                              fontSize: 16,
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                      padding: const EdgeInsets.all(3),
-                                      child: isSelected
-                                          ? Container(
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: AppColors.primary,
+                                        const SizedBox(width: 16),
+
+                                        // Language Label
+                                        Text(
+                                          lang.label,
+                                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                                fontWeight: FontWeight.w600,
+                                                color: AppColors.onSurface,
                                               ),
-                                            )
-                                          : null,
+                                        ),
+                                        const Spacer(),
+
+                                        // Radio Selection Indicator
+                                        Container(
+                                          width: 24,
+                                          height: 24,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                              color: isSelected
+                                                  ? AppColors.primary
+                                                  : AppColors.outlineVariant,
+                                              width: 2,
+                                            ),
+                                          ),
+                                          padding: const EdgeInsets.all(3),
+                                          child: isSelected
+                                              ? Container(
+                                                  decoration: const BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: AppColors.primary,
+                                                  ),
+                                                )
+                                              : null,
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                          );
-                        }).toList(),
+                              );
+                            }).toList(),
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 16),
 
@@ -339,6 +352,9 @@ class _SplashLanguageScreenState extends State<SplashLanguageScreen>
                           ),
                           child: ElevatedButton(
                             onPressed: () {
+                              setState(() {
+                                AppTranslation.currentLanguage = _selectedLanguageCode;
+                              });
                               Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                   builder: (context) => const OnboardingCarouselScreen(),
