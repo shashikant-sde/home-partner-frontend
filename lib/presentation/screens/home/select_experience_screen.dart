@@ -126,29 +126,33 @@ class _SelectExperienceScreenState extends State<SelectExperienceScreen> {
                   ),
                 ),
               ),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: Colors.transparent, // Handled by ink
-                  shadowColor: AppColors.primary.withOpacity(0.2),
-                  elevation: 8,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                ).copyWith(
-                  backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                ),
-                child: Ink(
+              child: SizedBox(
+                width: double.infinity,
+                height: 54,
+                child: Container(
                   decoration: BoxDecoration(
                     gradient: AppColors.primaryGradient,
-                    borderRadius: BorderRadius.circular(100),
+                    borderRadius: BorderRadius.circular(AppDimensions.radiusFull),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primary.withOpacity(0.25),
+                        blurRadius: 16,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
                   ),
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppDimensions.radiusFull),
+                      ),
+                    ),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -156,13 +160,13 @@ class _SelectExperienceScreenState extends State<SelectExperienceScreen> {
                           'Save Changes',
                           style: TextStyle(
                             fontFamily: 'Manrope',
-                            fontSize: 16,
+                            fontSize: 17,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
                         ),
                         SizedBox(width: 8),
-                        Icon(Icons.check_circle_outline_rounded, color: Colors.white, size: 18),
+                        Icon(Icons.check_circle_outline_rounded, color: Colors.white, size: 20),
                       ],
                     ),
                   ),

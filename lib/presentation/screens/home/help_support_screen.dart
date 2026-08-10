@@ -14,23 +14,26 @@ class HelpSupportScreen extends StatefulWidget {
 
 class _HelpSupportScreenState extends State<HelpSupportScreen> {
   final TextEditingController _searchController = TextEditingController();
-  final int _activeNavIndex = 3; // Account is active
+  final int _activeNavIndex = 3;
 
   // Track expanded state for FAQ items
-  final List<bool> _faqExpanded = [false, false, false];
+  final List<bool> _faqExpanded = [true, false, false];
 
   final List<Map<String, String>> _faqs = [
     {
-      'question': 'How do I change my service area?',
-      'answer': 'To update your service area, go to Profile > Service Settings > Working Radius. Note that some area changes may require a re-verification of your local permits.',
+      'question': 'How do I verify my service provider profile?',
+      'answer':
+          'To complete your verification, navigate to Profile Settings > Identity Verification. You will need to upload a valid government-issued ID and a recent profile photo. Verification usually takes 24-48 business hours.',
     },
     {
-      'question': 'When will I receive my weekly earnings?',
-      'answer': 'Earnings are processed every Monday and typically appear in your registered bank account by Wednesday, depending on your bank\'s processing times.',
+      'question': 'When will I receive my earnings?',
+      'answer':
+          'Earnings are typically processed every Tuesday for all completed and approved services from the previous week (Monday-Sunday). Depending on your bank, funds may take 1-3 business days to appear in your account.',
     },
     {
-      'question': 'What if a customer cancels last minute?',
-      'answer': 'Cancellations made within 24 hours of the scheduled start time are subject to a late cancellation fee which is paid directly to your balance.',
+      'question': 'What happens if a client cancels a request?',
+      'answer':
+          'If a client cancels within 24 hours of the scheduled service, a cancellation fee may apply. This fee is automatically credited to your account. For more details, view our Cancellation Policy in the Terms of Service.',
     },
   ];
 
@@ -45,10 +48,11 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColors.background.withOpacity(0.85),
         elevation: 0,
+        scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_rounded, color: AppColors.primary),
+          icon: const Icon(Icons.arrow_back, color: AppColors.primary),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text(
@@ -60,7 +64,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
             color: AppColors.primary,
           ),
         ),
-        centerTitle: true,
+        centerTitle: false,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -69,7 +73,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 16),
-              // Hero Section
+              // Search Hero Section
               const Text(
                 'How can we help?',
                 style: TextStyle(
@@ -79,39 +83,43 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                   color: AppColors.onSurface,
                 ),
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: 8),
               const Text(
-                'Search our knowledge base or browse categories below.',
+                'Find answers to common questions or browse topics below.',
                 style: TextStyle(
                   fontFamily: 'Inter',
-                  fontSize: 15,
+                  fontSize: 16,
                   color: AppColors.onSurfaceVariant,
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
 
               // Search Bar
               Container(
                 decoration: BoxDecoration(
                   color: AppColors.surfaceContainerLowest,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.outlineVariant),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                 child: Row(
                   children: [
-                    const Icon(Icons.search_rounded, color: AppColors.onSurfaceVariant),
+                    const Icon(Icons.search, color: AppColors.outline),
                     const SizedBox(width: 12),
                     Expanded(
                       child: TextField(
                         controller: _searchController,
                         style: const TextStyle(
                           fontFamily: 'Inter',
-                          fontSize: 15,
+                          fontSize: 16,
                         ),
                         decoration: const InputDecoration(
                           hintText: 'Search for help topics',
-                          hintStyle: TextStyle(color: AppColors.outline),
+                          hintStyle: TextStyle(
+                            color: AppColors.outline,
+                            fontFamily: 'Inter',
+                            fontSize: 16,
+                          ),
                           border: InputBorder.none,
                         ),
                       ),
@@ -121,188 +129,158 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
               ),
               const SizedBox(height: 24),
 
-              // Browse by Topic
-              const Text(
-                'BROWSE BY TOPIC',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.2,
-                  color: AppColors.onSurfaceVariant,
-                ),
+              // Bento Grid of Categories (4 Items matching UI)
+              _buildCategoryCard(
+                icon: Icons.person_outline,
+                iconBgColor: AppColors.primaryFixed,
+                iconColor: AppColors.primary,
+                title: 'Account & Profile',
+                description: 'Manage login details, verification, and settings.',
               ),
               const SizedBox(height: 12),
-
-              // Bento Grid of Categories
-              GridView.count(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 2,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                childAspectRatio: 0.95,
-                children: [
-                  _buildTopicCard(
-                    icon: Icons.payments_outlined,
-                    title: 'Earnings & Payments',
-                    subtitle: 'Payouts, taxes, and balance',
-                  ),
-                  _buildTopicCard(
-                    icon: Icons.calendar_today_rounded,
-                    title: 'Schedule & Bookings',
-                    subtitle: 'Managing tasks & availability',
-                  ),
-                  _buildTopicCard(
-                    icon: Icons.person_outline_rounded,
-                    title: 'Account & Profile',
-                    subtitle: 'Verification and settings',
-                  ),
-                  _buildTopicCard(
-                    icon: Icons.security_rounded,
-                    title: 'Safety & Security',
-                    subtitle: 'Protocols and reporting',
-                  ),
-                ],
+              _buildCategoryCard(
+                icon: Icons.payments_outlined,
+                iconBgColor: AppColors.secondaryFixed,
+                iconColor: AppColors.secondary,
+                title: 'Earnings & Payments',
+                description: 'Payout cycles, bank info, and service fees.',
               ),
-              const SizedBox(height: 28),
+              const SizedBox(height: 12),
+              _buildCategoryCard(
+                icon: Icons.assignment_outlined,
+                iconBgColor: AppColors.tertiaryFixed,
+                iconColor: AppColors.tertiary,
+                title: 'Services & Requests',
+                description: 'Booking management and client interactions.',
+              ),
+              const SizedBox(height: 12),
+              _buildCategoryCard(
+                icon: Icons.settings_suggest_outlined,
+                iconBgColor: AppColors.surfaceContainerHigh,
+                iconColor: AppColors.onSurfaceVariant,
+                title: 'App & Technical Issues',
+                description: 'App bugs, navigation, and device support.',
+              ),
+              const SizedBox(height: 32),
 
               // FAQs Accordion
-              const Text(
-                'FREQUENTLY ASKED QUESTIONS',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.2,
-                  color: AppColors.onSurfaceVariant,
+              const Center(
+                child: Text(
+                  'Frequently Asked Questions',
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.onSurface,
+                  ),
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
 
               ...List.generate(_faqs.length, (index) => _buildFaqItem(index)),
 
-              const SizedBox(height: 28),
+              const SizedBox(height: 32),
 
-              // Still need help? Contact Us
-              const Text(
-                'STILL NEED HELP?',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.2,
-                  color: AppColors.onSurfaceVariant,
-                ),
-              ),
-              const SizedBox(height: 12),
-
+              // Still Need Help? Card
               Container(
-                padding: const EdgeInsets.all(24),
+                width: double.infinity,
+                padding: const EdgeInsets.all(28),
                 decoration: BoxDecoration(
-                  gradient: AppColors.primaryGradient,
+                  color: AppColors.primary,
                   borderRadius: BorderRadius.circular(32),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primary.withOpacity(0.2),
+                      color: AppColors.primary.withOpacity(0.3),
                       blurRadius: 20,
                       offset: const Offset(0, 8),
                     ),
                   ],
                 ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Contact our team',
+                      'Still need help?',
                       style: TextStyle(
                         fontFamily: 'Manrope',
-                        fontSize: 20,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 8),
                     Text(
-                      'Available 24/7 for emergency support and general inquiries.',
+                      'Our dedicated support team is available 24/7 to assist you with any questions or concerns.',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Inter',
-                        fontSize: 14,
-                        color: Colors.white.withOpacity(0.8),
+                        fontSize: 15,
+                        color: AppColors.onPrimaryContainer.withOpacity(0.9),
+                        height: 1.4,
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    _buildContactButton(
-                      icon: Icons.chat_bubble_outline_rounded,
+                    const SizedBox(height: 24),
+                    // Chat Button (White Filled)
+                    _buildWhiteContactButton(
+                      icon: Icons.forum_outlined,
                       text: 'Chat with Support',
+                      onTap: () {},
                     ),
                     const SizedBox(height: 12),
-                    _buildContactButton(
-                      icon: Icons.call_outlined,
-                      text: 'Request a Callback',
-                    ),
-                    const SizedBox(height: 12),
-                    _buildContactButton(
-                      icon: Icons.mail_outline_rounded,
+                    // Email Us (Outlined)
+                    _buildOutlinedContactButton(
+                      icon: Icons.mail_outline,
                       text: 'Email Us',
+                      onTap: () {},
+                    ),
+                    const SizedBox(height: 12),
+                    // Call Support (Outlined)
+                    _buildOutlinedContactButton(
+                      icon: Icons.call_outlined,
+                      text: 'Call Support',
+                      onTap: () {},
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 32),
 
-              // Footer info
-              Center(
-                child: Column(
-                  children: [
-                    const Text(
-                      'Version 2.4.12 • Built for HomePartners',
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 12,
-                        color: AppColors.onSurfaceVariant,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          onTap: () {},
-                          child: Text(
-                            'Privacy Policy',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primary,
-                            ),
-                          ),
+              // Image & Footer Asset Section
+              ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: Container(
+                  height: 180,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.outlineVariant),
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Image.network(
+                    'https://lh3.googleusercontent.com/aida-public/AB6AXuCGd27eyT2-09AKoIQV7EWxN3sHPxZx6JbpCu-p3j3hKg4IL5QESoFQm6mapmEmd6VI3hvWZw8RpXfh9fpBeqvOHN8NN0dqAqpTZ0vO0_SiwlgXDn3Bm1z61Tbg8T6OaRqQQDSxXJZZEyxA8mBEiQw1rWcsQmGfejZEs3FB2iCUIYYnETTiV4qlXhISyETJNHI7hDsF5c1mOOGqd6zEHWujAMxZ84hUlx_kYYJn-HCpG3X0nkRjuzsBVGp39UXWtscIpDfY3qyu9b96',
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        color: AppColors.surfaceContainerHigh,
+                        child: const Center(
+                          child: Icon(Icons.workspace_premium, color: AppColors.primary, size: 48),
                         ),
-                        const SizedBox(width: 8),
-                        Text(
-                          '•',
-                          style: TextStyle(color: AppColors.outlineVariant),
-                        ),
-                        const SizedBox(width: 8),
-                        InkWell(
-                          onTap: () {},
-                          child: Text(
-                            'Terms of Service',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primary,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                      );
+                    },
+                  ),
                 ),
               ),
-              const SizedBox(height: 100), // Space for bottom bar
+              const SizedBox(height: 16),
+              const Center(
+                child: Text(
+                  'HomePartner Platform v2.4.0',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.onSurfaceVariant,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 32),
             ],
           ),
         ),
@@ -396,17 +374,19 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
     );
   }
 
-  Widget _buildTopicCard({
+  Widget _buildCategoryCard({
     required IconData icon,
+    required Color iconBgColor,
+    required Color iconColor,
     required String title,
-    required String subtitle,
+    required String description,
   }) {
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: AppColors.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.transparent),
         boxShadow: const [
           BoxShadow(
             color: Color.fromRGBO(25, 28, 30, 0.04),
@@ -417,33 +397,32 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: 44,
-            height: 44,
+            width: 48,
+            height: 48,
             decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.primary.withOpacity(0.08),
+              color: iconBgColor,
+              borderRadius: BorderRadius.circular(14),
             ),
-            child: Icon(icon, color: AppColors.primary, size: 20),
+            child: Icon(icon, color: iconColor, size: 24),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
           Text(
             title,
             style: const TextStyle(
               fontFamily: 'Manrope',
-              fontSize: 15,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               color: AppColors.onSurface,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 6),
           Text(
-            subtitle,
+            description,
             style: const TextStyle(
               fontFamily: 'Inter',
-              fontSize: 12,
+              fontSize: 14,
               color: AppColors.onSurfaceVariant,
             ),
           ),
@@ -460,32 +439,27 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
         color: AppColors.surfaceContainerLowest,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: const [
-          BoxShadow(
-            color: Color.fromRGBO(25, 28, 30, 0.04),
-            blurRadius: 20,
-            offset: Offset(0, 4),
-          ),
-        ],
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.outlineVariant),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
         child: Theme(
           data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
           child: ExpansionTile(
+            initiallyExpanded: isExpanded,
             title: Text(
               faq['question']!,
               style: const TextStyle(
-                fontFamily: 'Inter',
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
+                fontFamily: 'Manrope',
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
                 color: AppColors.onSurface,
               ),
             ),
             trailing: Icon(
-              isExpanded ? Icons.expand_less_rounded : Icons.expand_more_rounded,
-              color: AppColors.onSurfaceVariant,
+              isExpanded ? Icons.expand_less : Icons.expand_more,
+              color: AppColors.outline,
             ),
             onExpansionChanged: (expanded) {
               setState(() {
@@ -499,7 +473,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                   faq['answer']!,
                   style: const TextStyle(
                     fontFamily: 'Inter',
-                    fontSize: 13,
+                    fontSize: 14,
                     height: 1.5,
                     color: AppColors.onSurfaceVariant,
                   ),
@@ -512,31 +486,70 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
     );
   }
 
-  Widget _buildContactButton({
+  Widget _buildWhiteContactButton({
     required IconData icon,
     required String text,
+    required VoidCallback onTap,
   }) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      height: 48,
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.12),
-        borderRadius: BorderRadius.circular(100),
-        border: Border.all(color: Colors.white.withOpacity(0.15)),
-      ),
-      child: InkWell(
-        onTap: () {},
-        borderRadius: BorderRadius.circular(100),
+      height: 52,
+      child: ElevatedButton(
+        onPressed: onTap,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+          foregroundColor: AppColors.primary,
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100),
+          ),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: Colors.white, size: 18),
+            Icon(icon, color: AppColors.primary, size: 20),
             const SizedBox(width: 8),
             Text(
               text,
               style: const TextStyle(
                 fontFamily: 'Inter',
-                fontSize: 14,
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: AppColors.primary,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOutlinedContactButton({
+    required IconData icon,
+    required String text,
+    required VoidCallback onTap,
+  }) {
+    return SizedBox(
+      width: double.infinity,
+      height: 52,
+      child: OutlinedButton(
+        onPressed: onTap,
+        style: OutlinedButton.styleFrom(
+          side: const BorderSide(color: Colors.white, width: 1.5),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: Colors.white, size: 20),
+            const SizedBox(width: 8),
+            Text(
+              text,
+              style: const TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 15,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),

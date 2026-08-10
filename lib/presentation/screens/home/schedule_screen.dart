@@ -3,6 +3,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
 import 'account_screen.dart';
 import 'earnings_screen.dart';
+import 'available_jobs_screen.dart';
 
 class Appointment {
   final String id;
@@ -609,11 +610,12 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           child: BottomNavigationBar(
             currentIndex: _activeNavIndex,
             onTap: (index) {
-              setState(() {
-                _activeNavIndex = index;
-              });
+              if (index == _activeNavIndex) return;
               if (index == 0) {
-                Navigator.of(context).pop();
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const AvailableJobsScreen()),
+                  (route) => false,
+                );
               } else if (index == 2) {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => const EarningsScreen()),

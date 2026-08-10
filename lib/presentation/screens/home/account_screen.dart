@@ -3,6 +3,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
 import 'earnings_screen.dart';
 import 'schedule_screen.dart';
+import 'available_jobs_screen.dart';
 import 'help_support_screen.dart';
 import 'notification_settings_screen.dart';
 import 'bank_details_screen.dart';
@@ -218,13 +219,7 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
           ],
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings_outlined, color: AppColors.onSurfaceVariant),
-            onPressed: () {},
-          ),
-          const SizedBox(width: 8),
-        ],
+        actions: const [],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
@@ -622,12 +617,12 @@ class _AccountScreenState extends State<AccountScreen> {
           child: BottomNavigationBar(
             currentIndex: _activeNavIndex,
             onTap: (index) {
-              setState(() {
-                _activeNavIndex = index;
-              });
+              if (index == _activeNavIndex) return;
               if (index == 0) {
-                // Pop back to home (Jobs)
-                Navigator.of(context).popUntil((route) => route.isFirst);
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const AvailableJobsScreen()),
+                  (route) => false,
+                );
               } else if (index == 1) {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => const ScheduleScreen()),

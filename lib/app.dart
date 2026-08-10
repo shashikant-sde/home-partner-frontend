@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'core/themes/app_theme.dart';
-import 'presentation/screens/auth/splash_language_screen.dart';
+import 'presentation/screens/auth/loading_screen.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       title: 'HomePartner',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      home: const SplashLanguageScreen(),
+      home: const LoadingScreen(),
     );
   }
 }

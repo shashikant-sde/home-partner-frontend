@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
 import 'help_support_screen.dart';
+import 'available_jobs_screen.dart';
+import 'schedule_screen.dart';
+import 'account_screen.dart';
 class Transaction {
   final String id;
   final String title;
@@ -706,11 +709,20 @@ class _EarningsScreenState extends State<EarningsScreen> {
           child: BottomNavigationBar(
             currentIndex: _activeNavIndex,
             onTap: (index) {
-              setState(() {
-                _activeNavIndex = index;
-              });
+              if (index == _activeNavIndex) return;
               if (index == 0) {
-                Navigator.of(context).popUntil((route) => route.isFirst);
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const AvailableJobsScreen()),
+                  (route) => false,
+                );
+              } else if (index == 1) {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const ScheduleScreen()),
+                );
+              } else if (index == 3) {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const AccountScreen()),
+                );
               }
             },
             type: BottomNavigationBarType.fixed,

@@ -397,16 +397,8 @@ class _SelectCityScreenState extends State<SelectCityScreen> {
               right: 0,
               child: Container(
                 padding: const EdgeInsets.all(AppDimensions.marginMobile),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    colors: [
-                      AppColors.background,
-                      AppColors.background.withOpacity(0.95),
-                      Colors.transparent,
-                    ],
-                  ),
+                decoration: const BoxDecoration(
+                  color: AppColors.background,
                 ),
                 child: SizedBox(
                   width: double.infinity,
